@@ -5,11 +5,10 @@ import com.brunocp.workshopmongo.dto.UserDto;
 import com.brunocp.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,5 +35,17 @@ public class UserResource {
         User user = service.findById(id);
 
         return ResponseEntity.ok().body(new UserDto(user));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDto> insert(@RequestBody UserDto dto) {
+
+        User user = service.fromDto(dto);
+
+        user = service.insert(user);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 }
