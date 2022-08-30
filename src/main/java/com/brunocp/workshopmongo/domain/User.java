@@ -9,6 +9,8 @@ import java.util.Objects;
 @Document
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 5821272194025562424L;
+
     @Id
     private String id;
     private String name;
