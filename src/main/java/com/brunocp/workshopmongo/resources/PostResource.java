@@ -48,6 +48,6 @@ public class PostResource {
 
         List<Post> list = service.fullSearch(text, min, max);
 
-        return ResponseEntity.ok().body(list);w
+        return ResponseEntity.ok().body(list);
     }
 }
