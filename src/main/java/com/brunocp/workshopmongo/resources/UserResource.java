@@ -1,5 +1,6 @@
 package com.brunocp.workshopmongo.resources;
 
+import com.brunocp.workshopmongo.domain.Post;
 import com.brunocp.workshopmongo.domain.User;
 import com.brunocp.workshopmongo.dto.UserDto;
 import com.brunocp.workshopmongo.services.UserService;
@@ -67,5 +68,13 @@ public class UserResource {
         user = service.update(user);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+
+        User user = service.findById(id);
+
+        return ResponseEntity.ok().body(user.getPosts());
     }
 }
